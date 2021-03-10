@@ -2,49 +2,40 @@ package config
 
 import (
 	"determination/config"
-	"fmt"
 	"io/ioutil"
 	"reflect"
 	"strings"
-	"determination/determination/tool"
+	
 )
 
-var configMap map[string]string
+var configMap map[string]map[string]interface{}
 var configRe reflect.Value
 
 func init(){
 	configRe = reflect.ValueOf(new(config.Config)).Elem()
-	configMap = make(map[string]string)
+	configMap = make(map[string]map[string]interface{})
 	makeConfig()
 }
-func Config(){
-	fmt.Println(configMap)
+func AppC(key string) interface{}{
+	return Config("App",key)
 }
-
-func configCall(methods string) map[string]string{
-	return configRe.MethodByName(methods).Call([]reflect.Value{})[0].Interface().(map[string]string)
+func Config(key1 string,key2 string) interface{}{
+	return configMap[key1][key2]
 }
-
+func configCall(methods string) map[string]interface{}{
+	return configRe.MethodByName(methods).Call([]reflect.Value{})[0].Interface().(map[string]interface{})
+}
 func makeConfig(){
-
-	// config.Call()
-	// whattype := configCall("App")
-	// fmt.Println(whattype["IP"])
-
-	// return 
 	fileInfoList,err := ioutil.ReadDir("./config")
 	if err != nil {
-		fmt.Println("err")
+		panic("根目录找不到config文件")
 		return
 	}
 	var Split []string
 	for i := range fileInfoList {
 		Split = strings.Split(string(fileInfoList[i].Name()), ".")
 		if Split[1] == "config" {
-			configMap = tool.Collection(configMap,configCall(Split[0]))
+			configMap[Split[0]] = configCall(Split[0])
 		}
 	}
-
-
-	
 }
