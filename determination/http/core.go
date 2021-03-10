@@ -1,7 +1,6 @@
 package http 
 
 import(
-	"fmt"
     "determination/determination/tool"
 	"determination/determination/config"
 	"net/http"
@@ -13,7 +12,6 @@ import(
 func Run(){
     go goHttp(config.AppC("PORT").(string));
     select {};
-    // fmt.Println(config.AppC("IP"))
 }
 func goHttp(port string){
     mux := http.NewServeMux()
@@ -21,12 +19,13 @@ func goHttp(port string){
         if r.URL.RequestURI() == "/favicon.ico" {
             return 
         }
-        controllerCall(html.EscapeString(r.URL.Path)[1:],w,r)
-        return
+        if !controllerCall(html.EscapeString(r.URL.Path)[1:],w,r) {
+            w.WriteHeader(404)
+        }
     })
     http.ListenAndServe(":"+port, mux)
 }
-func controllerCall(url string,w http.ResponseWriter,r *http.Request){
+func controllerCall(url string,w http.ResponseWriter,r *http.Request) bool{
 	urlAnalysis := strings.Split(url, "/")
 	if len(urlAnalysis) == 1{
 		urlAnalysis = append(urlAnalysis,tool.Env("DEF_METHOD","index"))
@@ -43,7 +42,8 @@ func controllerCall(url string,w http.ResponseWriter,r *http.Request){
 
     if(rv.IsValid() != false){
     	rv.Call([]reflect.Value{})
+        return true
     }else{
-    	fmt.Println("404")
+    	return false
     }
 }
