@@ -1,3 +1,10 @@
+运行
+根目录运行 go run run.go即可
+端口在env内
+本框架无路由按着控制器+方法进入
+如访问127.0.0.1:9000/app/test则访问的是AppController结构体的test方法
+127.0.0.1:9000默认进入的方法在env内配置
+-----------------------------------------------------
 目录结构
 app 	主目录
 	|_ controller 控制器目录
@@ -13,6 +20,11 @@ determination 框架核心目录
 /config说明
 import "determination/determination/config"
 会自动读取所有在/config的包含 \*.config.go的文件
+方法与文件名必须一致如要加一个test的配置
+func (c Config) Test() map[string]interface{}{
+	return map[string]interface{}{}
+}
+文件名则是Test.config.go 方法名必须首字母大写
 
 返回app配置内指定key的数据
 AppC(key string) interface{}

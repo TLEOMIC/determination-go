@@ -28,6 +28,9 @@ func goHttp(port string){
 func controllerCall(url string,w http.ResponseWriter,r *http.Request) bool{
 	urlAnalysis := strings.Split(url, "/")
 	if len(urlAnalysis) == 1{
+        if urlAnalysis[0] == ""{
+            urlAnalysis[0] = tool.Env("DEF_CONTROLLER","index")
+        }
 		urlAnalysis = append(urlAnalysis,tool.Env("DEF_METHOD","index"))
 	}else if urlAnalysis[1] == ""{
         urlAnalysis[1] = tool.Env("DEF_METHOD","index")
