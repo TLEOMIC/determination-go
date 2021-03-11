@@ -39,10 +39,10 @@ func controllerCall(url string,w http.ResponseWriter,r *http.Request) bool{
     //判断是否存在方法
     if(rv.MethodByName(tool.Capitalize(urlAnalysis[1])).IsValid() != false){
         //中间件核心代码
-        next := func(request interface{}) interface{}{
+        next := func(request middleware.Http) interface{}{
             //最后再call
-            rv.FieldByName("W").Set(reflect.ValueOf(request.(middleware.Http).W))
-            rv.FieldByName("R").Set(reflect.ValueOf(request.(middleware.Http).R))
+            rv.FieldByName("W").Set(reflect.ValueOf(request.W))
+            rv.FieldByName("R").Set(reflect.ValueOf(request.R))
             rv = rv.MethodByName(tool.Capitalize(urlAnalysis[1]))
             return rv.Call([]reflect.Value{})
         }
@@ -58,7 +58,7 @@ func controllerCall(url string,w http.ResponseWriter,r *http.Request) bool{
 }
 
 func middlewareMake(thisfunc middleware.MakeMiddleware,next middleware.Next) middleware.Next{
-    return func(request interface{}) interface{}{
+    return func(request middleware.Http) interface{}{
         return thisfunc(request,next)
     }
 }

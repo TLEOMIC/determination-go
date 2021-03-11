@@ -7,14 +7,14 @@ func (Mr MiddlewareRegister) AppMiddlewareRegister() map[string][]MakeMiddleware
 		"Test":{midd1,midd2},
 	}
 }
-func midd1(request interface{},next Next) interface{}{
+func midd1(request Http,next Next) interface{}{
 	fmt.Println("run2")
-	fmt.Println(request.(Http).W)
+	fmt.Println(request.W)
 	return next(request)
 }
-func midd2(request interface{},next Next) interface{}{
+func midd2(request Http,next Next) interface{}{
 	fmt.Println("run3")
-	request = next(request)
+	newrequest := next(request)
 	fmt.Println("run4")
-	return request
+	return newrequest
 }

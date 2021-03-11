@@ -31,10 +31,9 @@ func (Mr MiddlewareRegister) TestMiddlewareRegister() map[string][]MakeMiddlewar
 
 中间件使用格式
 next的位置会影响是在方法之前执行还是方法之后执行，具体使用和laravel框架的中间件几乎一致
-func demo1(request interface{},next Next) interface{}{
+func demo1(request Http,next Next) interface{}{
 	return next(request)
 }
-request使用时需要转换成Http才能使用（这个之后应该会修复
 -----------------------------------------------------
 /config说明
 import "determination/determination/config"
