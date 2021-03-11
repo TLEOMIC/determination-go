@@ -1,11 +1,8 @@
 package main
 
-import (
-	"determination/determination/http"
-)
-
+import "determination/determination/http"
 
 func main(){
-	http.Run()
+	http.WebRun()
+	http.End()
 }
-

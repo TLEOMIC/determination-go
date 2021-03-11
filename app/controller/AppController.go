@@ -2,7 +2,7 @@ package controller
 
 import (
 	"fmt"
-	"determination/determination/tool"
+	
 )
 
 type AppController struct{
@@ -16,5 +16,5 @@ func (c AppController) Test(){
 	fmt.Println(c)
 }
 func (c AppController) Index(){
-	tool.EchoJson(c.W,map[string]string{"code":"0","msg":"这是首页"})
+	c.EchoJson(map[string]string{"code":"0","msg":"这是首页"})
 }

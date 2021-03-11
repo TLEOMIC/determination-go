@@ -5,22 +5,22 @@ import (
 	"io/ioutil"
 	"reflect"
 	"strings"
-	
+	"determination/determination/tool"
 )
 
-var configMap map[string]map[string]interface{}
+var configMap map[string]interface{}
 var configRe reflect.Value
 
 func init(){
 	configRe = reflect.ValueOf(new(config.Config)).Elem()
-	configMap = make(map[string]map[string]interface{})
+	configMap = make(map[string]interface{})
 	makeConfig()
 }
 func AppC(key string) interface{}{
 	return Config("App",key)
 }
 func Config(key1 string,key2 string) interface{}{
-	return configMap[key1][key2]
+	return configMap[tool.Capitalize(key1)].(map[string]interface{})[key2]
 }
 func configCall(methods string) map[string]interface{}{
 	return configRe.MethodByName(methods).Call([]reflect.Value{})[0].Interface().(map[string]interface{})
@@ -35,7 +35,7 @@ func makeConfig(){
 	for i := range fileInfoList {
 		Split = strings.Split(string(fileInfoList[i].Name()), ".")
 		if Split[1] == "config" {
-			configMap[Split[0]] = configCall(Split[0])
+			configMap[tool.Capitalize(Split[0])] = configCall(tool.Capitalize(Split[0]))
 		}
 	}
 }
