@@ -1,6 +1,10 @@
 package middleware
 
-import "net/http"
+import (
+	"net/http"
+	"determination/determination/tool"
+)
+
 
 type MiddlewareRegister struct{}
 
@@ -11,4 +15,8 @@ type MakeMiddleware func(request Http,next Next) interface{}
 type Http struct{
 	W http.ResponseWriter
 	R *http.Request
+}
+
+func Log(log string){
+	tool.Log(log)
 }

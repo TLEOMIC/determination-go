@@ -4,9 +4,17 @@ import "fmt"
 
 func (Mr MiddlewareRegister) AppMiddlewareRegister() map[string][]MakeMiddleware{
 	return map[string][]MakeMiddleware{
-		"Test":{midd1,midd2},
+		"Test":{checkTime,midd1,midd2},
 	}
 }
+
+func checkTime(request Http,next Next) interface{}{
+	str := "begin"
+	newrequest := next(request)
+	Log(str+"|end")
+	return newrequest
+}
+
 func midd1(request Http,next Next) interface{}{
 	fmt.Println("run2")
 	fmt.Println(request.W)
