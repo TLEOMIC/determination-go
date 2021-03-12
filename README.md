@@ -36,13 +36,15 @@ func demo1(request Http,next Next) interface{}{
 }
 -----------------------------------------------------
 /config说明
-import "determination/determination/config"
-会自动读取所有在/config的包含 \*.config.go的文件
+框架启动时会自动读取所有在/config的包含 \*.config.go的文件
 方法与文件名必须一致,如要加一个test的配置
 func (c Config) Test() map[string]interface{}{
 	return map[string]interface{}{}
 }
 文件名则是Test.config.go
+
+api说明
+import "determination/determination/tool"
 
 返回app配置内指定key的数据
 AppC(key string) interface{}

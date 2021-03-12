@@ -20,3 +20,6 @@ type Http struct{
 func Log(log string){
 	tool.Log(log)
 }
+func L(LogName string,log string){
+	tool.L(LogName,log)
+}

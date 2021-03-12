@@ -11,6 +11,7 @@ func (Mr MiddlewareRegister) AppMiddlewareRegister() map[string][]MakeMiddleware
 func checkTime(request Http,next Next) interface{}{
 	str := "begin"
 	newrequest := next(request)
+	L("test","abc")
 	Log(str+"|end")
 	return newrequest
 }
