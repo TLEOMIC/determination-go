@@ -25,9 +25,13 @@ determination 框架核心目录
 func (Mr MiddlewareRegister) TestMiddlewareRegister() map[string][]MakeMiddleware{
 	return map[string][]MakeMiddleware{
 		"Test":{demo1,demo2},
+		"@begin":{demo0},
+		"@end":{demo3},
 	}
 }
 文件名则是Test.middleware.go
+@begin和@end是该中间键的全局方法
+以上的中间件执行顺序是demo0,demo1,demo2,demo3
 
 中间件使用格式
 next的位置会影响是在方法之前执行还是方法之后执行，具体使用和laravel框架的中间件几乎一致

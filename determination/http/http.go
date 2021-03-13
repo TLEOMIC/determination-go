@@ -17,14 +17,14 @@ func goWebHttp(port string){
         if r.URL.RequestURI() == "/favicon.ico" {
             return 
         }       
-        controller,method :=httpMakeControllerAndMethod(html.EscapeString(r.URL.Path)[1:])
+        controller,method :=webHttpMakeControllerAndMethod(html.EscapeString(r.URL.Path)[1:])
         if !controllerCall(controller,method,middleware.Http{W:w,R:r}) {
             w.WriteHeader(404)
         }
     })
     http.ListenAndServe(":"+port, mux)
 }
-func httpMakeControllerAndMethod(url string) (string,string){
+func webHttpMakeControllerAndMethod(url string) (string,string){
     urlAnalysis := strings.Split(url, "/")
     controller := urlAnalysis[0]
     method := urlAnalysis[1]

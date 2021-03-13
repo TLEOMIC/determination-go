@@ -22,20 +22,21 @@ func controllerCall(controller string,method string,mh middleware.Http) bool{
         //判断是否存在方法
         if(rv.MethodByName(tool.Capitalize(method)).IsValid() != false){
             //中间件核心代码
-            middlewareCreate(func(request middleware.Http) interface{}{
+            if(middlewareCreate(func(request middleware.Http) interface{}{
                 rv.FieldByName("W").Set(reflect.ValueOf(request.W))
                 rv.FieldByName("R").Set(reflect.ValueOf(request.R))
                 rv = rv.MethodByName(tool.Capitalize(method))
                 return rv.Call([]reflect.Value{})
-            },controller,method)(mh)
-            return true
+            },controller,method)(mh) != false){
+                return true
+            }
         }
     }
     return false
 }
 //中间件创建
 func middlewareCreate(next middleware.Next,controller string,method string) middleware.Next{
-    middlewareList := core.Middleware(controller,method)
+    middlewareList := append(append(core.Middleware(controller,"@begin"),core.Middleware(controller,method)...),core.Middleware(controller,"@end")...)
     for i := len(middlewareList) - 1 ; i >= 0; i-- {
         next = middlewareMake(middlewareList[i],next)
     }

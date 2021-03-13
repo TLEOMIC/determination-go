@@ -1,29 +1,31 @@
 package middleware
 
-import "fmt"
+// import "fmt"
 
 func (Mr MiddlewareRegister) AppMiddlewareRegister() map[string][]MakeMiddleware{
 	return map[string][]MakeMiddleware{
 		"Test":{checkTime,midd1,midd2},
+		"@begin":{isWebHttp},
+		// "@end":{endfunc},
 	}
 }
 
 func checkTime(request Http,next Next) interface{}{
-	str := "begin"
+	// str := "begin"
 	newrequest := next(request)
-	L("test","abc")
-	Log(str+"|end")
+	// L("test","abc")
+	// Log(str+"|end")
 	return newrequest
 }
 
 func midd1(request Http,next Next) interface{}{
-	fmt.Println("run2")
-	fmt.Println(request.W)
+	// fmt.Println("run2")
+	// fmt.Println(request.W)
 	return next(request)
 }
 func midd2(request Http,next Next) interface{}{
-	fmt.Println("run3")
+	// fmt.Println("run3")
 	newrequest := next(request)
-	fmt.Println("run4")
+	// fmt.Println("run4")
 	return newrequest
 }
