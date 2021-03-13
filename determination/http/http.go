@@ -11,6 +11,7 @@ import(
 )
 func WebRun(){
     tool.Loginit()
+    tool.Dbinit()
     go goWebHttp(tool.AppC("PORT").(string))
 }
 func goWebHttp(port string){

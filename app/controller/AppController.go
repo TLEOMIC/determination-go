@@ -10,7 +10,21 @@ type AppController struct{
 }
 
 func (c AppController) Test2(){
-	fmt.Println(c)
+
+		rows, err := tool.Db("mycat").Query("select a from db1")
+		if err != nil {  
+			fmt.Println(err)
+		}
+		var a string
+		for rows.Next(){
+			err := rows.Scan(&a)
+			if err != nil {  
+				fmt.Println(err)
+			}
+			fmt.Println(a)
+		}
+		rows.Close()
+
 }
 func (c AppController) Test(){
 	// fmt.Println(c)

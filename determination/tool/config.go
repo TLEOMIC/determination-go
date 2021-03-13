@@ -11,3 +11,6 @@ func AppC(key string) interface{}{
 func Config(key1 string,key2 string) interface{}{
 	return configMap[Capitalize(key1)].(map[string]interface{})[key2]
 }
+func DataBaseConfigAll() map[string]interface{}{
+	return configMap["DataBase"].(map[string]interface{})
+}
