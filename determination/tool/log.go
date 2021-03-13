@@ -15,8 +15,8 @@ var ioMsgMaxLength int
 var logChan map[string]chan string
 
 var f map[string]*os.File
-//这里不用init的问题是如果用init就不能用config了，加载的顺序问题,必须手动初始化
-func Loginit(){
+
+func LogInit(){
 	fileInfoList,err := ioutil.ReadDir("./logs")
 	if err != nil {
 		panic("根目录找不到logs文件")

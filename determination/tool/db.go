@@ -12,9 +12,7 @@ var dbs map[string]*sql.DB
 func init(){
 	dbs = make(map[string]*sql.DB)
 }
-
-//这里不用init的问题是如果用init就不能用config了，加载的顺序问题,必须手动初始化
-func Dbinit(){
+func DbInit(){
 	DataBaseConfig := DataBaseConfigAll()
 	for i := range DataBaseConfig{
 		DBC := DataBaseConfig[i].(map[string]string)
