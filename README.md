@@ -68,7 +68,7 @@ AppC(key string) interface{}
 ### 返回指定key1文件配置内key2的数据
 Config(key1 string,key2 string) interface{}
 
-## /logs说明
+# /logs说明
 * 如果需要往/logs/test目录写入文件,则需要在logs目录下预先创建test目录
 * 然后调用api即可写入 上例则是L('test','日志内容')
 
