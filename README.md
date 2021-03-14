@@ -1,5 +1,5 @@
 运行
-根目录运行 go run run.go即可
+根目录运行 go run server.go即可
 端口在env内
 本框架无路由按着控制器+方法进入
 如访问127.0.0.1:9000/app/test则访问的是AppController结构体的test方法
