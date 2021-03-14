@@ -9,10 +9,10 @@
 
 # 目录结构
 - app     主目录
-   - [controller](#controller控制器目录) 
-   - [middleware](#middleware中间件目录) 
-- [config](#config配置目录)  
-- [logs](#logs日志目录) 
+   - [controller 控制器目录](#controller) 
+   - [middleware 中间件目录](#middleware) 
+- [config 配置目录](#config)  
+- [logs 日志目录](#logs) 
 - determination 框架核心目录
 
 ## controller
