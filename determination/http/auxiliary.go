@@ -13,8 +13,10 @@ func End(){
 }
 //这里用这个init的问题是如果用init就不能用config了，加载的顺序问题,必须手动初始化
 func HttpInit(){
+    if tool.Env("DB_INIT","true") != "false"{
+        tool.DbInit()
+    }
 	tool.LogInit()
-    tool.DbInit()
 }
 //控制器调用
 func controllerCall(controller string,method string,mh middleware.Http) interface{}{

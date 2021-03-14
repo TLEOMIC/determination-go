@@ -45,9 +45,10 @@ func tcpHandle(conn net.Conn){
     if err != nil {
         fmt.Println(err)
     }
+    var Rdata interface{}
     if m["params"] != nil{
         controller,method :=makeControllerAndMethod(m["method"].(string),".")
-        Rdata := controllerCall(controller,method,middleware.Http{Tcp:m["params"]})
+        Rdata = controllerCall(controller,method,middleware.Http{Tcp:m["params"]})
     }
     if Rdata == false {
         Rdata = "404"

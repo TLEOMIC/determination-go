@@ -74,3 +74,6 @@ Env(key string,value string) string
 
 获取数据库连接 具体使用去查 go-sql-driver/mysql拓展
 Db(database string) *sql.DB  返回的这个值是 sql.Open返回的值，只是做了一些连接的操作
+
+如果不需要db
+在env中DB_INIT=false即可解决
