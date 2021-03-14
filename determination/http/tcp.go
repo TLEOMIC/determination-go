@@ -35,14 +35,20 @@ func tcpHandle(conn net.Conn){
         if err != io.EOF {
             fmt.Println(err)
         }
-    }   
+    }
+    //consul的心跳处理处理
+    if(string(data)==""){
+        return
+    }
     var m map[string]interface{}
     err = json.Unmarshal([]byte(data), &m)
     if err != nil {
         fmt.Println(err)
     }
-    controller,method :=makeControllerAndMethod(m["method"].(string),".")
-    Rdata := controllerCall(controller,method,middleware.Http{Tcp:m["params"]})
+    if m["params"] != nil{
+        controller,method :=makeControllerAndMethod(m["method"].(string),".")
+        Rdata := controllerCall(controller,method,middleware.Http{Tcp:m["params"]})
+    }
     if Rdata == false {
         Rdata = "404"
     }
