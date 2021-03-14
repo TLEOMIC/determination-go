@@ -17,5 +17,8 @@ func (c Config) App() map[string]interface{}{
 		//日志管道长度
 		"LOG_CHAN_NUM":tool.Env("LOG_CHAN_NUM","10000"),
 
+		//TCP
+		"TCP_PORT":tool.Env("TCP_PORT","9001"),
+		
 	}
 }

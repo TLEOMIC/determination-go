@@ -15,6 +15,7 @@ type MakeMiddleware func(request Http,next Next) interface{}
 type Http struct{
 	W http.ResponseWriter
 	R *http.Request
+	Tcp interface{}
 }
 
 func Log(log string){

@@ -5,6 +5,7 @@ import (
     "determination/determination/core"
     "determination/app/middleware"
     "reflect"
+    "strings"
 )
 //阻塞用
 func End(){
@@ -16,20 +17,30 @@ func HttpInit(){
     tool.DbInit()
 }
 //控制器调用
-func controllerCall(controller string,method string,mh middleware.Http) bool{
+func controllerCall(controller string,method string,mh middleware.Http) interface{}{
     if tool.Config("Controller",tool.Capitalize(controller)+"Controller") != nil {
         rv := reflect.ValueOf(tool.Config("Controller",tool.Capitalize(controller)+"Controller")).Elem()
         //判断是否存在方法
         if(rv.MethodByName(tool.Capitalize(method)).IsValid() != false){
             //中间件核心代码
-            if(middlewareCreate(func(request middleware.Http) interface{}{
-                rv.FieldByName("W").Set(reflect.ValueOf(request.W))
-                rv.FieldByName("R").Set(reflect.ValueOf(request.R))
+            Rdata := middlewareCreate(func(request middleware.Http) interface{}{
+                if request.W != nil {
+                    rv.FieldByName("W").Set(reflect.ValueOf(request.W))
+                }
+                if request.R != nil {
+                    rv.FieldByName("R").Set(reflect.ValueOf(request.R))
+                }
+                if request.Tcp != nil {
+                    rv.FieldByName("Tcp").Set(reflect.ValueOf(request.Tcp))
+                }
                 rv = rv.MethodByName(tool.Capitalize(method))
-                return rv.Call([]reflect.Value{})
-            },controller,method)(mh) != false){
-                return true
-            }
+                rvData := rv.Call([]reflect.Value{})
+                if len(rvData) == 1{
+                    return rvData[0].Interface()
+                }
+                return rvData 
+            },controller,method)(mh)
+            return Rdata
         }
     }
     return false
@@ -47,4 +58,18 @@ func middlewareMake(thisfunc middleware.MakeMiddleware,next middleware.Next) mid
     return func(request middleware.Http) interface{}{
         return thisfunc(request,next)
     }
+}
+func makeControllerAndMethod(url string,separator string) (string,string){
+    if url == ""{
+        return tool.AppC("DEF_CONTROLLER").(string),tool.AppC("DEF_METHOD").(string)
+    }
+    urlAnalysis := strings.Split(url, separator)
+    controller := urlAnalysis[0]
+    method := urlAnalysis[1]
+    if len(urlAnalysis) == 1{
+     urlAnalysis = append(urlAnalysis,tool.AppC("DEF_METHOD").(string))
+    }else if method == ""{
+        method = tool.AppC("DEF_METHOD").(string)
+    }
+    return controller,method
 }

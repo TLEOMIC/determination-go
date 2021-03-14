@@ -6,3 +6,9 @@ func isWebHttp(request Http,next Next) interface{}{
 	}
 	return false
 }
+func isTcp(request Http,next Next) interface{}{
+	if(request.Tcp != nil){
+		return next(request)
+	}
+	return false
+}
