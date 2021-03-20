@@ -6,10 +6,25 @@ import (
     "determination/app/middleware"
     "reflect"
     "strings"
+    "fmt"
+    "os"
+    "os/signal"
 )
 //阻塞用
 func End(){
-    select {};
+    signalChan := make(chan os.Signal, 1)
+    cleanupDone := make(chan bool)
+    signal.Notify(signalChan, os.Interrupt)
+    go func() {
+        for _ = range signalChan {
+            endIng()
+            cleanupDone <- true
+        }
+    }()
+    <-cleanupDone
+}
+func endIng(){
+    fmt.Println("\nending... \n")
 }
 //这里用这个init的问题是如果用init就不能用config了，加载的顺序问题,必须手动初始化
 func HttpInit(){
