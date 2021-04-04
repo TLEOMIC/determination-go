@@ -83,6 +83,9 @@ L(LogName string,log string)
 
 import "determination/determination/tool"
 
+### 上传文件保存
+Filemove(r \*http.Request,formkey string,position string) []interface{}
+
 ### 首字母大写
 Capitalize(str string) string 
 

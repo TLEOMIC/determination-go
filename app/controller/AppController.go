@@ -3,6 +3,7 @@ package controller
 import (
 	"fmt"
 	"determination/determination/tool"
+
 )
 
 type AppController struct{
@@ -27,7 +28,6 @@ func (c AppController) Test2(){
 
 }
 func (c AppController) Test(){
-	// fmt.Println(c)
 	fmt.Println(tool.AppC("LOG_IO_MSG_MAX_LENGTH"))
 }
 func (c AppController) Index(){

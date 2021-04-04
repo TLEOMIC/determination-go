@@ -19,7 +19,7 @@ var f map[string]*os.File
 func LogInit(){
 	fileInfoList,err := ioutil.ReadDir("./logs")
 	if err != nil {
-		panic("根目录找不到logs文件")
+		panic("根目录找不到logs目录")
 		return
 	}
 	logChan = make(map[string]chan string)
