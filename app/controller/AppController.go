@@ -12,19 +12,15 @@ type AppController struct{
 
 func (c AppController) Test2(){
 
-		rows, err := tool.Db("mycat").Query("select a from db1")
-		if err != nil {  
-			fmt.Println(err)
-		}
-		var a string
-		for rows.Next(){
-			err := rows.Scan(&a)
-			if err != nil {  
-				fmt.Println(err)
-			}
-			fmt.Println(a)
-		}
-		rows.Close()
+		fmt.Println(tool.Select("mycat",map[string]interface{}{
+			"field":map[string]string{
+				"id":"string",
+				"a":"string",
+			},
+			"table":"db1",
+			"where":"id = ?",
+			"whereP":[]interface{}{1},
+		}))
 
 }
 func (c AppController) Test(){

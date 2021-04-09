@@ -95,6 +95,9 @@ EchoJson(w http.ResponseWriter,data interface{})
 ### 判断是否为空
 Empty(params interface{}) bool
 
+### 切片转字符串(和php的Implode方法差不多)
+Implode(field interface{}) (Rts string)
+
 ### 读取env文件，key是键 value是如果env内不存在则使用的默认值
 Env(key string,value string) string
 
@@ -102,6 +105,14 @@ Env(key string,value string) string
 * 具体使用去查 go-sql-driver/mysql拓展
 * Db(database string) \*sql.DB  返回的这个值是 sql.Open返回的值，只是做了一些连接的操作
 * 如果不需要db,在env中DB_INIT=false即可关闭
+
+#### orm方法
+##### func Select(database string,rule map[string]interface{}) (Rta []map[string]interface{})
+* 查询函数，实际上是拼装sql语句，可以不使用
+* database 和上面一样
+* rule 支持参数 	field 		table 	where 		whereP 				order 							limit
+*	解释			需求的参数	表名		where条件	where条件的参数绑定	order原生语句(不需要order by)		limit原生语句(不需要limit)
+*	类型			string		string	string		[]interface{}		string							string
 
 ## 有问题反馈
 在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流
