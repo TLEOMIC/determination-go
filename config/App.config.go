@@ -23,5 +23,12 @@ func (c Config) App() map[string]interface{}{
 		"TCP_IP":tool.Env("TCP_IP","0.0.0.0"),
 		"TCP_PORT":tool.Env("TCP_PORT","9001"),
 		
+		//consul注册发现
+		"CONSUL_IP_PORT":tool.Env("CONSUL_IP_PORT","127.0.0.1:8500"),
+		"CONSUL_HTTP_ID":tool.Env("CONSUL_HTTP_ID","determinationGoHttp"),
+		"CONSUL_HTTP_NAME":tool.Env("CONSUL_HTTP_NAME","determinationGoHttp"),
+		"CONSUL_TCP_ID":tool.Env("CONSUL_TCP_ID","determinationGoTcp"),
+		"CONSUL_TCP_NAME":tool.Env("CONSUL_TCP_NAME","determinationGoTcp"),
+		
 	}
 }

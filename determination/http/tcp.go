@@ -13,7 +13,7 @@ import (
 
 func TcpRun(){
     go goTcp(tool.AppC("TCP_IP").(string),tool.AppC("TCP_PORT").(string))
-    go consul.Register("determinationGoTcp","determinationGoTcp",tool.GetMyIp(),tool.AppC("TCP_PORT").(string))
+    go consul.Register(tool.AppC("CONSUL_TCP_ID").(string),tool.AppC("CONSUL_TCP_NAME").(string),tool.GetMyIp(),tool.AppC("TCP_PORT").(string),"tcp")
 }
 func goTcp(ip string,port string){
     ln, err := net.Listen("tcp", ip+":"+port)

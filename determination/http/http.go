@@ -9,7 +9,7 @@ import(
 )
 func WebRun(){
     go goWebHttp(tool.AppC("HTTP_IP").(string),tool.AppC("HTTP_PORT").(string))
-    go consul.Register("determinationGoHttp","determinationGoHttp",tool.GetMyIp(),tool.AppC("HTTP_PORT").(string))
+    go consul.Register(tool.AppC("CONSUL_HTTP_ID").(string),tool.AppC("CONSUL_HTTP_NAME").(string),tool.GetMyIp(),tool.AppC("HTTP_PORT").(string),"http")
 }
 func goWebHttp(ip string,port string){
     mux := http.NewServeMux()
