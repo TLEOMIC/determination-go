@@ -8,13 +8,15 @@ import (
     "bufio"
     "io"
     "encoding/json"
+    "determination/determination/tool/consul"
 )
 
 func TcpRun(){
-    go goTcp(tool.AppC("TCP_PORT").(string))
+    go goTcp(tool.AppC("TCP_IP").(string),tool.AppC("TCP_PORT").(string))
+    go consul.Register("determinationGoTcp","determinationGoTcp",tool.GetMyIp(),tool.AppC("TCP_PORT").(string))
 }
-func goTcp(port string){
-    ln, err := net.Listen("tcp", ":"+port)
+func goTcp(ip string,port string){
+    ln, err := net.Listen("tcp", ip+":"+port)
     if err != nil {
         panic("tcp启动失败:"+err.Error())
     }

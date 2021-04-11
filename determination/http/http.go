@@ -2,15 +2,16 @@ package http
 
 import(
     "determination/determination/tool"
+    "determination/determination/tool/consul"
     "determination/app/middleware"
     "net/http"
 	"html"
 )
 func WebRun(){
-
-    go goWebHttp(tool.AppC("PORT").(string))
+    go goWebHttp(tool.AppC("HTTP_IP").(string),tool.AppC("HTTP_PORT").(string))
+    go consul.Register("determinationGoHttp","determinationGoHttp",tool.GetMyIp(),tool.AppC("HTTP_PORT").(string))
 }
-func goWebHttp(port string){
+func goWebHttp(ip string,port string){
     mux := http.NewServeMux()
     mux.HandleFunc("/",func(w http.ResponseWriter,r *http.Request){
         if r.URL.RequestURI() == "/favicon.ico" {
@@ -21,5 +22,5 @@ func goWebHttp(port string){
             w.WriteHeader(404)
         }
     })
-    http.ListenAndServe(":"+port, mux)
+    http.ListenAndServe(ip+":"+port, mux)
 }

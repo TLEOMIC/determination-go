@@ -4,8 +4,7 @@ import "determination/determination/tool"
 
 func (c Config) App() map[string]interface{}{
 	return map[string]interface{}{
-		"IP":tool.Env("IP","127.0.0.1"),
-		"PORT":tool.Env("PORT","9000"),
+		
 		//默认控制器
 		"DEF_CONTROLLER":tool.Env("DEF_CONTROLLER","app"),
 		//默认方法
@@ -17,7 +16,11 @@ func (c Config) App() map[string]interface{}{
 		//日志管道长度
 		"LOG_CHAN_NUM":tool.Env("LOG_CHAN_NUM","10000"),
 
-		//TCP
+		//HTTP协议
+		"HTTP_IP":tool.Env("HTTP_IP","0.0.0.0"),
+		"HTTP_PORT":tool.Env("HTTP_PORT","9000"),
+		//TCP协议
+		"TCP_IP":tool.Env("TCP_IP","0.0.0.0"),
 		"TCP_PORT":tool.Env("TCP_PORT","9001"),
 		
 	}
